@@ -6,11 +6,11 @@
 #include <SocketIOclient.h>
 
 
-const char* ssid = "Delfos";
-const char* password = "GnothiSeauton";
+const char* ssid = "NOBODY";
+const char* password = "pachu1234";
 
-const char *host = "192.168.0.16";
-uint16_t port = 3001;
+const char *host = "192.168.1.106";
+uint16_t port = 3006;
 const char *url = "/ws";
 
 
@@ -21,7 +21,7 @@ WebSocketsClient ws;
 void connectToWifi(const char *ssid, const char *password)
 {
     WiFi.begin(ssid, password);
-    Serial.print("Connecting to: ");
+    Serial.print("Conectado a: ");
     Serial.print(ssid);
     
     Serial.println(" ...");
@@ -34,7 +34,7 @@ void connectToWifi(const char *ssid, const char *password)
     }
 
     Serial.println('\n');
-    Serial.println("Connection established!");
+    Serial.println("Conexion establecida!");
     Serial.print("IP Address:\t");
     Serial.println(WiFi.localIP());
 }
@@ -44,16 +44,16 @@ void wsEvent(WStype_t type, uint8_t *payload, size_t length)
     switch (type)
     {
     case WStype_DISCONNECTED:
-        Serial.println("[WS] Disconnect.");
+        Serial.println("[WS] Desconectado.");
         break;
     
     case WStype_CONNECTED:
-        Serial.println("[WS] Connected.");
+        Serial.println("[WS] Connectado.");
         ws.sendTXT("Connected.");
     
     case WStype_TEXT:
         
-        Serial.printf("get text:");
+        Serial.printf("Texto obtenido");
         for (int i = 0; i < length; i++)
         {
             Serial.printf("%c", payload[i]);
@@ -84,10 +84,4 @@ void setup()
 void loop() {
     ws.loop();
 
-    if (Serial.available() > 0) {
-        if (Serial.read() == 'p')
-        {
-            ws.sendTXT("Hola Pepe");
-        }
-    }
 }
